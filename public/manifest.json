@@ -1,0 +1,22 @@
+{
+  "name": "FARMOS - Smart Livestock Management",
+  "short_name": "FARMOS",
+  "description": "Sistem Informasi Manajemen Kandang Ternak Ayam",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F2E8",
+  "theme_color": "#58763A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icons/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

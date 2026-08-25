@@ -1,7 +1,14 @@
-import { PrismaClient, Role, FarmType } from './generated/prisma/client';
+import { PrismaClient, Role, FarmType } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 import bcrypt from 'bcryptjs';
 
-const prisma = new PrismaClient({} as any);
+// Buat connection pool menggunakan DATABASE_URL dari .env
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+
+// Inisialisasi Prisma Client dengan driver adapter
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log('🌱 Starting database seeding...');
