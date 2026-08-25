@@ -19,6 +19,7 @@ import {
 import { logoutAction } from '@/app/(auth)/logout/actions';
 import { useSidebar } from './SidebarContext';
 import { TenantSwitcher } from './TenantSwitcher';
+import { APP_VERSION } from '@/lib/constants';
 
 const sidebarGroups = [
   {
@@ -124,13 +125,16 @@ export function Sidebar({ farmId, role, memberships }: { farmId: string, role: s
           );
         })}
       </div>
-      <div className="p-4 border-t border-sidebar-border mt-auto mb-2">
+      <div className="p-4 border-t border-sidebar-border mt-auto mb-2 space-y-4">
         <form action={logoutAction}>
           <button type="submit" className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium text-sidebar-foreground hover:bg-destructive/10 hover:text-destructive transition-all">
             <LogOut size={18} />
             Logout
           </button>
         </form>
+        <div className="text-center text-xs font-medium text-sidebar-foreground/30 uppercase tracking-widest">
+          {APP_VERSION}
+        </div>
       </div>
       </div>
     </>

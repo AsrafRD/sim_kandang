@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { verifySession } from '@/lib/auth/session';
 import { db } from '@/lib/db';
 import { ArrowUpRight, CloudSun, Map, Activity, ShieldCheck, ThermometerSun, Leaf, Droplet, User, UserPlus } from 'lucide-react';
+import { APP_VERSION } from '@/lib/constants';
 
 export default async function Home() {
   const session = await verifySession();
@@ -27,7 +28,8 @@ export default async function Home() {
           <div className="w-10 h-10 bg-[#58763A] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#58763A]/20">
             <Leaf className="w-6 h-6" />
           </div>
-          <span className="font-heading font-bold text-xl tracking-tight text-[#17221C]">KANDANG</span>
+          <span className="font-heading font-bold text-xl tracking-tight text-[#17221C]">FARMOS</span>
+          <span className="bg-[#58763A]/10 text-[#58763A] px-2 py-0.5 rounded-full text-xs font-bold border border-[#58763A]/20">{APP_VERSION}</span>
         </div>
         <div className="flex items-center gap-4">
           {session ? (
