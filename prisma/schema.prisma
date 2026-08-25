@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPERADMIN
+  OWNER
+  SUPPLIER
+  OPERATOR
+}
+
+enum FarmType {
+  BROILER
+  LAYER
+}
+
+enum FeedType {
+  STARTER
+  GROWER
+  FINISHER
+}
+
+enum TransactionType {
+  IN
+  OUT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships TenantMember[]
+  sessions    Session[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Farm {
+  id        String   @id @default(uuid())
+  name      String
+  type      FarmType @default(BROILER)
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members      TenantMember[]
+  flocks       Flock[]
+  inventories  Inventory[]
+}
+
+model TenantMember {
+  id        String   @id @default(uuid())
+  userId    String
+  farmId    String
+  role      Role     @default(OPERATOR)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, farmId])
+}
+
+model Flock {
+  id             String    @id @default(uuid())
+  farmId         String
+  batchName      String    // misal: "Batch Jan 2026"
+  initialCount   Int       // Jumlah bibit/DOC awal
+  chickInDate    DateTime
+  harvestDate    DateTime?
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  farm           Farm          @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  dailyRecords   DailyRecord[]
+}
+
+model DailyRecord {
+  id             String   @id @default(uuid())
+  flockId        String
+  date           DateTime
+  mortality      Int      @default(0) // Ayam mati
+  culling        Int      @default(0) // Ayam diafkir
+  feedConsumedKg Float    @default(0) // Pakan dikonsumsi (kg)
+  waterConsumedL Float    @default(0) // Air dikonsumsi (liter)
+  
+  // Khusus Ayam Layer (Petelur)
+  eggCount       Int?     @default(0) // Butir telur
+  eggWeightKg    Float?   @default(0) // Bobot telur (kg)
+  
+  temperature    Float?   // Suhu (°C)
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  flock          Flock    @relation(fields: [flockId], references: [id], onDelete: Cascade)
+
+  @@unique([flockId, date])
+}
+
+model Inventory {
+  id           String            @id @default(uuid())
+  farmId       String
+  itemName     String            // Nama Pakan/Obat/Vaksin
+  category     String            // "PAKAN", "OBAT", "VAKSIN"
+  currentStock Float             @default(0)
+  unit         String            // "KG", "KARUNG", "BOTOL"
+  minStock     Float             @default(10) // Ambang batas alert
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  farm         Farm              @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  logs         InventoryLog[]
+}
+
+model InventoryLog {
+  id          String          @id @default(uuid())
+  inventoryId String
+  type        TransactionType
+  amount      Float
+  notes       String?
+  createdAt   DateTime        @default(now())
+
+  inventory   Inventory       @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+}
