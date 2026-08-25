@@ -24,10 +24,15 @@ export default async function FarmLayout({
   const currentMember = memberships.find(m => m.farmId === farmId);
   const role = currentMember?.role || 'OPERATOR';
 
+  const user = await db.user.findUnique({
+    where: { id: session.userId as string },
+    select: { name: true }
+  });
+
   return (
     <SidebarProvider>
       <div className="flex h-screen bg-background overflow-hidden relative">
-        <Sidebar farmId={farmId} role={role} memberships={memberships} />
+        <Sidebar farmId={farmId} role={role} memberships={memberships} userName={user?.name || 'User'} />
         <div className="flex-1 flex flex-col h-full overflow-hidden w-full">
           <Topbar farmId={farmId} />
           <main className="flex-1 overflow-y-auto p-4 md:p-6">

@@ -29,9 +29,14 @@ enum FeedType {
   FINISHER
 }
 
-enum TransactionType {
-  IN
-  OUT
+enum InventoryLogType {
+  IN_DO
+  USE_DAILY
+  CARRY_OVER
+  RETURN_TO_PT
+  DAMAGE
+  MANUAL_IN
+  MANUAL_OUT
 }
 
 model User {
@@ -58,6 +63,8 @@ model Farm {
   name      String
   type      FarmType @default(BROILER)
   address   String?
+  latitude  Float?
+  longitude Float?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -87,6 +94,13 @@ model Flock {
   chickInDate    DateTime
   harvestDate    DateTime?
   isActive       Boolean   @default(true)
+  
+  // Harvest Stats
+  totalHarvestWeightKg Float?
+  totalHarvestedCount  Int?
+  finalFCR             Float?
+  ip                   Float?
+  
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -134,7 +148,7 @@ model Inventory {
 model InventoryLog {
   id          String          @id @default(uuid())
   inventoryId String
-  type        TransactionType
+  type        InventoryLogType
   amount      Float
   notes       String?
   createdAt   DateTime        @default(now())

@@ -32,26 +32,26 @@ export async function logFeedTransactionAction(farmId: string, inventoryId: stri
   const session = await verifySession();
   if (!session?.userId) throw new Error('Unauthorized');
 
-  const type = formData.get('type') as 'IN' | 'OUT';
+  const formType = formData.get('type') as 'IN' | 'OUT';
+  const type = formType === 'IN' ? 'MANUAL_IN' : 'MANUAL_OUT';
   const amount = parseFloat(formData.get('amount') as string);
   
   if (!amount || amount <= 0) throw new Error('Invalid amount');
 
-  await db.$transaction(async (tx) => {
-    const item = await tx.inventory.findUnique({ where: { id: inventoryId } });
-    if (!item) throw new Error('Not found');
+  const item = await db.inventory.findUnique({ where: { id: inventoryId } });
+  if (!item) throw new Error('Not found');
 
-    const newStock = type === 'IN' ? item.currentStock + amount : item.currentStock - amount;
-    if (newStock < 0) throw new Error('Insufficient stock');
+  const newStock = formType === 'IN' ? item.currentStock + amount : item.currentStock - amount;
+  if (newStock < 0) throw new Error('Insufficient stock');
 
-    await tx.inventory.update({
-      where: { id: inventoryId },
-      data: { currentStock: newStock }
-    });
-
-    await tx.inventoryLog.create({
-      data: { inventoryId, type, amount, notes: 'Manual entry' }
-    });
+  await db.inventory.update({
+    where: { id: inventoryId },
+    data: { 
+      currentStock: newStock,
+      logs: {
+        create: { type, amount, notes: 'Manual entry' }
+      }
+    }
   });
 
   revalidatePath(`/farm/${farmId}/feeding`);

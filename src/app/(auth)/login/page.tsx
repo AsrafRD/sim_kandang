@@ -14,9 +14,9 @@ export default function LoginPage() {
   return (
     <Card className="shadow-lg border-none">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-foreground">Welcome Back</CardTitle>
+        <CardTitle className="text-2xl font-bold text-foreground">Selamat Datang Kembali</CardTitle>
         <CardDescription>
-          Sign in to access your farm dashboard.
+          Masuk untuk mengakses dasbor peternakan Anda.
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
@@ -39,7 +39,7 @@ export default function LoginPage() {
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Kata Sandi</Label>
             </div>
             <Input 
               id="password" 
@@ -56,12 +56,12 @@ export default function LoginPage() {
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
             disabled={isPending}
           >
-            {isPending ? 'Signing in...' : 'Sign In'}
+            {isPending ? 'Memproses...' : 'Masuk'}
           </Button>
           <div className="text-sm text-center text-muted-foreground">
-            Don&apos;t have an account?{' '}
+            Belum punya akun?{' '}
             <Link href="/register" className="text-primary hover:underline font-medium">
-              Register here
+              Daftar di sini
             </Link>
           </div>
         </CardFooter>

@@ -12,12 +12,12 @@ export function AddHealthModal({ farmId }: { farmId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-        <Plus className="w-4 h-4" /> Register Item
+        <Plus className="w-4 h-4" /> Daftar Obat Baru
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Register Medical Item</DialogTitle>
-          <DialogDescription>Add a new medicine or vaccine to inventory.</DialogDescription>
+          <DialogTitle>Daftarkan Item Medis</DialogTitle>
+          <DialogDescription>Tambahkan obat atau vaksin baru ke inventaris.</DialogDescription>
         </DialogHeader>
         <form 
           action={(fd) => {
@@ -29,18 +29,18 @@ export function AddHealthModal({ farmId }: { farmId: string }) {
           className="space-y-4 pt-4"
         >
           <div>
-            <label className="block text-sm font-medium mb-1">Item Name</label>
+            <label className="block text-sm font-medium mb-1">Nama Item</label>
             <input 
               type="text" 
               name="itemName"
               required
-              placeholder="e.g. ND-IB Vaccine"
+              placeholder="Cth. Vaksin ND-IB"
               className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm" 
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Category</label>
+              <label className="block text-sm font-medium mb-1">Kategori</label>
               <select 
                 name="category"
                 required
@@ -52,7 +52,7 @@ export function AddHealthModal({ farmId }: { farmId: string }) {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Unit</label>
+              <label className="block text-sm font-medium mb-1">Satuan</label>
               <select 
                 name="unit"
                 required
@@ -66,7 +66,7 @@ export function AddHealthModal({ farmId }: { farmId: string }) {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Initial Stock</label>
+            <label className="block text-sm font-medium mb-1">Stok Awal</label>
             <input 
               type="number" 
               name="initialStock"
@@ -80,7 +80,7 @@ export function AddHealthModal({ farmId }: { farmId: string }) {
             disabled={isPending}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 rounded-md text-sm font-semibold transition-colors mt-2"
           >
-            {isPending ? 'Saving...' : 'Save Item'}
+            {isPending ? 'Menyimpan...' : 'Simpan Obat'}
           </button>
         </form>
       </DialogContent>

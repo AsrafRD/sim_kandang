@@ -12,12 +12,12 @@ export function AddMemberModal({ farmId }: { farmId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-        <UserPlus className="w-4 h-4" /> Add Member
+        <UserPlus className="w-4 h-4" /> Tambah Anggota
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Member</DialogTitle>
-          <DialogDescription>Invite or add a new role to this farm.</DialogDescription>
+          <DialogTitle>Tambah Anggota Tim</DialogTitle>
+          <DialogDescription>Undang atau daftarkan pengguna baru untuk kandang ini.</DialogDescription>
         </DialogHeader>
         <form 
           action={(fd) => { 
@@ -29,7 +29,7 @@ export function AddMemberModal({ farmId }: { farmId: string }) {
           className="space-y-4 pt-4"
         >
           <div>
-            <label className="block text-sm font-medium mb-1">Full Name</label>
+            <label className="block text-sm font-medium mb-1">Nama Lengkap</label>
             <input 
               type="text" 
               name="name"
@@ -39,7 +39,7 @@ export function AddMemberModal({ farmId }: { farmId: string }) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email Address</label>
+            <label className="block text-sm font-medium mb-1">Alamat Email</label>
             <input 
               type="email" 
               name="email"
@@ -49,23 +49,23 @@ export function AddMemberModal({ farmId }: { farmId: string }) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Role</label>
+            <label className="block text-sm font-medium mb-1">Peran (Role)</label>
             <select 
               name="role"
               required
               defaultValue="OPERATOR"
               className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
             >
-              <option value="OWNER">Owner</option>
+              <option value="OWNER">Pemilik (Owner)</option>
               <option value="OPERATOR">Petugas Kandang (Operator)</option>
-              <option value="SUPPLIER">Supplier</option>
+              <option value="SUPPLIER">Supplier (Pemasok)</option>
             </select>
           </div>
           
           <div className="bg-muted p-3 rounded-md flex items-start gap-2">
             <ShieldAlert className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
             <p className="text-xs text-muted-foreground">
-              New users will automatically receive the default password <strong>password123</strong>. They can change it later.
+              Pengguna baru akan otomatis mendapatkan kata sandi <strong>password123</strong>. Mereka dapat mengubahnya nanti.
             </p>
           </div>
 
@@ -74,7 +74,7 @@ export function AddMemberModal({ farmId }: { farmId: string }) {
             disabled={isPending}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 rounded-md text-sm font-medium transition-colors"
           >
-            {isPending ? 'Saving...' : 'Add Member'}
+            {isPending ? 'Menyimpan...' : 'Tambah Anggota'}
           </button>
         </form>
       </DialogContent>
@@ -88,13 +88,13 @@ export function EditMemberModal({ farmId, member }: { farmId: string, member: an
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-primary/10" title="Edit Profile & Role">
+      <DialogTrigger className="text-muted-foreground hover:text-primary transition-colors p-2 rounded-md hover:bg-primary/10" title="Edit Profil & Peran">
         <Pencil className="w-4 h-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Member</DialogTitle>
-          <DialogDescription>Change profile details and access level for {member.user.name}</DialogDescription>
+          <DialogTitle>Ubah Anggota</DialogTitle>
+          <DialogDescription>Ubah detail profil dan tingkat akses untuk {member.user.name}</DialogDescription>
         </DialogHeader>
         <form 
           action={(fd) => {
@@ -108,7 +108,7 @@ export function EditMemberModal({ farmId, member }: { farmId: string, member: an
           <input type="hidden" name="memberId" value={member.id} />
           
           <div>
-            <label className="block text-sm font-medium mb-1">Full Name</label>
+            <label className="block text-sm font-medium mb-1">Nama Lengkap</label>
             <input 
               type="text" 
               name="name"
@@ -119,7 +119,7 @@ export function EditMemberModal({ farmId, member }: { farmId: string, member: an
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-1">Email Address</label>
+            <label className="block text-sm font-medium mb-1">Alamat Email</label>
             <input 
               type="email" 
               name="email"
@@ -130,26 +130,26 @@ export function EditMemberModal({ farmId, member }: { farmId: string, member: an
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">New Password <span className="text-muted-foreground font-normal">(Leave blank to keep current)</span></label>
+            <label className="block text-sm font-medium mb-1">Kata Sandi Baru <span className="text-muted-foreground font-normal">(Kosongkan jika tidak ingin diubah)</span></label>
             <input 
               type="text" 
               name="newPassword"
-              placeholder="Enter new password"
+              placeholder="Masukkan kata sandi baru"
               className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm" 
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Role</label>
+            <label className="block text-sm font-medium mb-1">Peran (Role)</label>
             <select 
               name="role"
               required
               defaultValue={member.role}
               className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm"
             >
-              <option value="OWNER">Owner</option>
+              <option value="OWNER">Pemilik (Owner)</option>
               <option value="OPERATOR">Petugas Kandang (Operator)</option>
-              <option value="SUPPLIER">Supplier</option>
+              <option value="SUPPLIER">Supplier (Pemasok)</option>
             </select>
           </div>
 
@@ -158,7 +158,7 @@ export function EditMemberModal({ farmId, member }: { farmId: string, member: an
             disabled={isPending}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 rounded-md text-sm font-medium transition-colors"
           >
-            {isPending ? 'Updating...' : 'Update Member'}
+            {isPending ? 'Menyimpan...' : 'Perbarui Anggota'}
           </button>
         </form>
       </DialogContent>

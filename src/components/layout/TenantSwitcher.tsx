@@ -13,9 +13,20 @@ export function TenantSwitcher({ farms, currentFarmId }: { farms: any[], current
   const router = useRouter();
   
   return (
-    <Select value={currentFarmId} onValueChange={(val) => router.push(`/farm/${val}/overview`)}>
+    <Select 
+      value={currentFarmId} 
+      onValueChange={(val) => {
+        if (val === 'create_new_farm') {
+          router.push('/farm/create');
+        } else {
+          router.push(`/farm/${val}/overview`);
+        }
+      }}
+    >
       <SelectTrigger className="w-full bg-background border-border shadow-sm">
-        <SelectValue placeholder="Select Farm" />
+        <SelectValue>
+          {farms.find(f => f.farm.id === currentFarmId)?.farm.name || 'Select Farm'}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {farms.map((f) => (
@@ -23,6 +34,10 @@ export function TenantSwitcher({ farms, currentFarmId }: { farms: any[], current
             {f.farm.name}
           </SelectItem>
         ))}
+        <div className="h-px bg-border my-1" />
+        <SelectItem value="create_new_farm" className="text-primary font-medium focus:bg-primary/10">
+          + Buat Kandang Baru
+        </SelectItem>
       </SelectContent>
     </Select>
   );

@@ -14,9 +14,9 @@ export default function RegisterPage() {
   return (
     <Card className="shadow-lg border-none">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-foreground">Create an Account</CardTitle>
+        <CardTitle className="text-2xl font-bold text-foreground">Buat Akun Baru</CardTitle>
         <CardDescription>
-          Start managing your farm smarter today.
+          Mulai kelola peternakan Anda dengan lebih pintar hari ini.
         </CardDescription>
       </CardHeader>
       <form action={formAction}>
@@ -28,7 +28,7 @@ export default function RegisterPage() {
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name">Nama Lengkap</Label>
             <Input 
               id="name" 
               name="name" 
@@ -51,20 +51,10 @@ export default function RegisterPage() {
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="farmName">Farm Name</Label>
-            <Input 
-              id="farmName" 
-              name="farmName" 
-              type="text" 
-              placeholder="Kandang Modern Sejahtera" 
-              required 
-              className="bg-background/50 border-border"
-            />
-          </div>
+
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Kata Sandi</Label>
             <Input 
               id="password" 
               name="password" 
@@ -80,12 +70,12 @@ export default function RegisterPage() {
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
             disabled={isPending}
           >
-            {isPending ? 'Creating Account...' : 'Register'}
+            {isPending ? 'Membuat Akun...' : 'Daftar'}
           </Button>
           <div className="text-sm text-center text-muted-foreground">
-            Already have an account?{' '}
+            Sudah punya akun?{' '}
             <Link href="/login" className="text-primary hover:underline font-medium">
-              Sign in
+              Masuk
             </Link>
           </div>
         </CardFooter>

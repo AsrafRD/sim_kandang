@@ -1,9 +1,12 @@
-import { TenantSwitcher } from './TenantSwitcher';
 import { db } from '@/lib/db';
 import { verifySession } from '@/lib/auth/session';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Bell } from 'lucide-react';
 import { MobileMenuButton } from './MobileMenuButton';
+import { PageHeader } from './PageHeader';
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuGroup } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { LogOut } from 'lucide-react';
+import { logoutAction } from '@/app/(auth)/logout/actions';
 
 export async function Topbar({ farmId }: { farmId: string }) {
   const session = await verifySession();
@@ -23,31 +26,42 @@ export async function Topbar({ farmId }: { farmId: string }) {
 
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-4 md:px-6 flex-shrink-0">
-      <div className="flex items-center w-auto md:w-64">
+      <div className="flex items-center flex-1 min-w-0">
         <MobileMenuButton />
-        <div className="hidden md:block w-full">
-          {memberships.length > 0 && (
-            <TenantSwitcher farms={memberships} currentFarmId={farmId} />
-          )}
+        <div className="block ml-2 md:ml-0 overflow-hidden text-ellipsis whitespace-nowrap">
+          <PageHeader />
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
-        <button className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted relative">
-          <Bell size={20} />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
-        </button>
-        <div className="flex items-center gap-3 pl-4 border-l border-border">
-          <div className="text-sm text-right hidden sm:block">
-            <div className="font-medium text-foreground">{user?.name}</div>
-            <div className="text-xs text-muted-foreground capitalize">{memberInfo?.role?.toLowerCase() || 'Member'}</div>
-          </div>
-          <Avatar className="h-9 w-9 border border-border">
-            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-              {user?.name?.charAt(0) || 'U'}
-            </AvatarFallback>
-          </Avatar>
-        </div>
+      {/* Desktop Profile Menu */}
+      <div className="hidden md:flex items-center gap-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center gap-3 pl-4 border-l border-border outline-none cursor-pointer">
+            <div className="text-sm text-right">
+              <div className="font-medium text-foreground">{user?.name}</div>
+              <div className="text-xs text-muted-foreground capitalize">{memberInfo?.role?.toLowerCase() || 'Member'}</div>
+            </div>
+            <Avatar className="h-9 w-9 border border-border">
+              <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                {user?.name?.charAt(0) || 'U'}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <form action={logoutAction}>
+                <button type="submit" className="w-full text-left">
+                  <DropdownMenuItem className="text-destructive cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Keluar</span>
+                  </DropdownMenuItem>
+                </button>
+              </form>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

@@ -24,31 +24,24 @@ export default async function TeamManagementPage({ params }: { params: Promise<{
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-3xl font-bold font-heading text-foreground flex items-center gap-2">
-            <Users className="w-8 h-8 text-primary" />
-            Team Management
-          </h1>
-          <p className="text-muted-foreground mt-1">Manage who has access to your farm data and operations.</p>
-        </div>
+      <div className="flex justify-end mb-6">
         <AddMemberModal farmId={farmId} />
       </div>
 
       {/* Members List */}
       <Card className="border-border bg-card">
         <CardHeader>
-          <CardTitle className="text-lg">Current Members</CardTitle>
-          <CardDescription>All users with access to this farm.</CardDescription>
+          <CardTitle className="text-lg">Anggota Tim Saat Ini</CardTitle>
+          <CardDescription>Daftar semua pengguna yang memiliki akses ke kandang ini.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="rounded-md border border-border">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 border-b border-border">
                 <tr>
-                  <th className="h-10 px-4 text-left font-medium text-muted-foreground">Name</th>
-                  <th className="h-10 px-4 text-left font-medium text-muted-foreground">Role</th>
-                  <th className="h-10 px-4 text-right font-medium text-muted-foreground">Action</th>
+                  <th className="h-10 px-4 text-left font-medium text-muted-foreground">Nama</th>
+                  <th className="h-10 px-4 text-left font-medium text-muted-foreground">Peran (Role)</th>
+                  <th className="h-10 px-4 text-right font-medium text-muted-foreground">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,7 +72,7 @@ export default async function TeamManagementPage({ params }: { params: Promise<{
                           <button 
                             type="submit"
                             className="text-muted-foreground hover:text-destructive transition-colors p-2 rounded-md hover:bg-destructive/10"
-                            title="Remove Member"
+                            title="Hapus Anggota"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -91,7 +84,7 @@ export default async function TeamManagementPage({ params }: { params: Promise<{
                 {members.length === 0 && (
                   <tr>
                     <td colSpan={3} className="p-4 text-center text-muted-foreground">
-                      No members found.
+                      Belum ada anggota tim.
                     </td>
                   </tr>
                 )}

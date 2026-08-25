@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { PerformanceChart } from '@/components/analytics/PerformanceChart';
 
 export default async function AnalyticsPage({
-  params,
+  params
 }: {
   params: Promise<{ farmId: string }>;
 }) {
@@ -51,11 +51,6 @@ export default async function AnalyticsPage({
     // Wrap with .dark class to force dark mode (Forest theme)
     <div className="dark min-h-[calc(100vh-4rem)] bg-background text-foreground -m-6 p-6">
       <div className="max-w-6xl mx-auto space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold font-heading text-accent tracking-wide uppercase">Command Center</h1>
-          <p className="text-muted-foreground mt-1">Deep analytics and performance projection.</p>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="bg-card/50 backdrop-blur-sm border-border">
             <CardHeader className="pb-2">

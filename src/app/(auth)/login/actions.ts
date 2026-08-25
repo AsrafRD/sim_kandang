@@ -29,5 +29,5 @@ export async function loginAction(prevState: any, formData: FormData) {
 
   await createSession(user.id);
 
-  redirect('/');
+  redirect('/farm/router');
 }

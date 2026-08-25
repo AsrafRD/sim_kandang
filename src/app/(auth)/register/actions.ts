@@ -10,9 +10,8 @@ export async function registerAction(prevState: any, formData: FormData) {
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const farmName = formData.get('farmName') as string;
 
-  if (!name || !email || !password || !farmName) {
+  if (!name || !email || !password) {
     return { error: 'All fields are required' };
   }
 
@@ -28,39 +27,16 @@ export async function registerAction(prevState: any, formData: FormData) {
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Use a transaction to ensure all or nothing
-  const user = await db.$transaction(async (tx) => {
-    // Create user
-    const newUser = await tx.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-    });
-
-    // Create Farm
-    const newFarm = await tx.farm.create({
-      data: {
-        name: farmName,
-        type: FarmType.BROILER,
-      },
-    });
-
-    // Create TenantMember (SUPERADMIN)
-    await tx.tenantMember.create({
-      data: {
-        userId: newUser.id,
-        farmId: newFarm.id,
-        role: Role.SUPERADMIN,
-      },
-    });
-
-    return newUser;
+  const user = await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+    },
   });
 
   // Create session
   await createSession(user.id);
 
-  redirect('/');
+  redirect('/farm/router');
 }

@@ -23,25 +23,18 @@ export default async function FeedingPage({ params }: { params: Promise<{ farmId
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-end mb-6">
-        <div>
-          <h1 className="text-3xl font-bold font-heading text-foreground flex items-center gap-2">
-            <Wheat className="w-8 h-8 text-primary" />
-            Feeding & Nutrition
-          </h1>
-          <p className="text-muted-foreground mt-1">Manage feed inventory and monitor stock levels.</p>
-        </div>
+      <div className="flex justify-end mb-6">
         {role !== 'SUPPLIER' && <AddFeedModal farmId={farmId} />}
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-bold font-heading mb-4">Feed Warehouse</h2>
+        <h2 className="text-xl font-bold font-heading mb-4">Gudang Pakan</h2>
         
         {feedItems.length === 0 ? (
           <Card className="border-dashed">
             <CardContent className="flex flex-col items-center justify-center py-12 text-center">
               <div className="text-4xl opacity-50 mb-2">📦</div>
-              <p className="text-muted-foreground">Warehouse is empty. Register feed items first.</p>
+              <p className="text-muted-foreground">Gudang masih kosong. Daftarkan jenis pakan terlebih dahulu.</p>
             </CardContent>
           </Card>
         ) : (
@@ -52,10 +45,10 @@ export default async function FeedingPage({ params }: { params: Promise<{ farmId
                   <CardTitle className="text-lg flex justify-between items-center">
                     {item.itemName}
                     {item.currentStock <= item.minStock && (
-                      <span className="text-xs bg-destructive text-destructive-foreground px-2 py-0.5 rounded-full font-medium">Low Stock</span>
+                      <span className="text-xs bg-destructive text-destructive-foreground px-2 py-0.5 rounded-full font-medium">Stok Menipis</span>
                     )}
                   </CardTitle>
-                  <CardDescription>Stock: <strong className="text-foreground text-xl">{item.currentStock}</strong> {item.unit}</CardDescription>
+                  <CardDescription>Stok Saat Ini: <strong className="text-foreground text-xl">{item.currentStock}</strong> {item.unit}</CardDescription>
                 </CardHeader>
                 {role !== 'SUPPLIER' && (
                   <CardContent>
@@ -69,7 +62,7 @@ export default async function FeedingPage({ params }: { params: Promise<{ farmId
                           placeholder="+Qty" 
                           className="w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm"
                         />
-                        <button type="submit" className="bg-green-600 hover:bg-green-700 text-white p-1.5 rounded-md transition-colors flex items-center justify-center" title="Restock (IN)">
+                        <button type="submit" className="bg-green-600 hover:bg-green-700 text-white p-1.5 rounded-md transition-colors flex items-center justify-center" title="Tambah Stok (IN)">
                           <ArrowDown size={18} />
                         </button>
                       </form>
@@ -83,7 +76,7 @@ export default async function FeedingPage({ params }: { params: Promise<{ farmId
                           placeholder="-Qty" 
                           className="w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1.5 text-sm"
                         />
-                        <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded-md transition-colors flex items-center justify-center" title="Use (OUT)">
+                        <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white p-1.5 rounded-md transition-colors flex items-center justify-center" title="Pakai (OUT)">
                           <ArrowUp size={18} />
                         </button>
                       </form>

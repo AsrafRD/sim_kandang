@@ -8,17 +8,7 @@ import { APP_VERSION } from '@/lib/constants';
 export default async function Home() {
   const session = await verifySession();
 
-  let firstFarmId = null;
-  if (session && session.userId) {
-    const memberships = await db.tenantMember.findMany({
-      where: { userId: session.userId as string },
-      include: { farm: true },
-      orderBy: { createdAt: 'asc' },
-    });
-    if (memberships.length > 0) {
-      firstFarmId = memberships[0].farmId;
-    }
-  }
+
 
   return (
     <div className="min-h-screen bg-[#F5F2E8] text-[#263026] selection:bg-[#58763A] selection:text-white pb-12">
@@ -39,7 +29,7 @@ export default async function Home() {
                   Logout
                 </button>
               </form>
-              <Link href={firstFarmId ? `/farm/${firstFarmId}/overview` : "/farm/create"} className="flex items-center gap-2 bg-[#233629] text-[#F5F2E8] px-5 py-2.5 rounded-full font-medium hover:bg-[#17221C] transition-all shadow-md">
+              <Link href="/farm/router" className="flex items-center gap-2 bg-[#233629] text-[#F5F2E8] px-5 py-2.5 rounded-full font-medium hover:bg-[#17221C] transition-all shadow-md">
                 Dashboard
               </Link>
             </>
@@ -47,11 +37,11 @@ export default async function Home() {
             <>
               <Link href="/login" className="hidden sm:flex items-center gap-2 font-medium text-[#7C8176] hover:text-[#58763A] transition-colors px-4 py-2">
                 <User className="w-4 h-4" />
-                Sign In
+                Masuk
               </Link>
               <Link href="/register" className="flex items-center gap-2 bg-[#233629] text-[#F5F2E8] px-5 py-2.5 rounded-full font-medium hover:bg-[#17221C] transition-all shadow-md">
                 <UserPlus className="w-4 h-4" />
-                Join Now
+                Daftar Sekarang
               </Link>
             </>
           )}
@@ -63,10 +53,10 @@ export default async function Home() {
         {/* Header Section */}
         <header className="mb-10">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-[#17221C] tracking-tight">
-            Hello, Agripreneur 👋
+            Halo, Agripreneur 👋
           </h1>
           <p className="text-[#7C8176] text-lg mt-3 font-medium max-w-xl">
-            Welcome to the future of livestock management. Optimize your farm with real-time 3D monitoring and deep data analytics.
+            Selamat datang di masa depan manajemen peternakan. Optimalkan performa kandang Anda dengan pemantauan data presisi tinggi.
           </p>
         </header>
 
@@ -82,22 +72,22 @@ export default async function Home() {
               <div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D7A84A]/20 text-[#D7A84A] text-xs font-bold uppercase tracking-wider mb-4 border border-[#D7A84A]/30">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  Smart Ecosystem
+                  Ekosistem Pintar
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold text-[#17221C] leading-tight max-w-md">
-                  Master Your <br/> Environment.
+                  Kendalikan <br/> Lingkungan Anda.
                 </h2>
                 <p className="text-[#7C8176] mt-4 max-w-sm">
-                  Track flock health, monitor feed conversion ratios, and predict yields with enterprise-grade precision.
+                  Pantau kesehatan ternak, konversi pakan (FCR), dan maksimalkan Indeks Prestasi (IP) dengan sistem terpadu.
                 </p>
               </div>
               
               <div className="flex items-center gap-4 mt-8">
                 <Link href="/register" className="bg-[#58763A] hover:bg-[#46602e] text-white px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-[#58763A]/25 transition-all flex items-center gap-2">
-                  Start Your Farm <ArrowUpRight className="w-5 h-5" />
+                  Mulai Sekarang <ArrowUpRight className="w-5 h-5" />
                 </Link>
                 <Link href="/login" className="bg-[#E6E2D6] hover:bg-[#d6cfbe] text-[#233629] px-6 py-4 rounded-2xl font-semibold transition-all">
-                  Dashboard
+                  Dashboard Utama
                 </Link>
               </div>
             </div>
@@ -117,7 +107,7 @@ export default async function Home() {
             <div className="flex justify-between items-start z-10">
               <div>
                 <h3 className="text-4xl font-light">28°<span className="text-xl">C</span></h3>
-                <p className="text-[#E6E2D6] opacity-80 mt-1">Optimal Range</p>
+                <p className="text-[#E6E2D6] opacity-80 mt-1">Rentang Optimal</p>
               </div>
               <CloudSun className="w-10 h-10 text-[#D7A84A]" />
             </div>
@@ -147,8 +137,8 @@ export default async function Home() {
             <div className="w-12 h-12 bg-[#D7A84A]/10 text-[#D7A84A] rounded-2xl flex items-center justify-center mb-4">
               <Map className="w-6 h-6" />
             </div>
-            <h4 className="font-bold text-[#17221C]">Interactive 3D</h4>
-            <p className="text-xs text-[#7C8176] mt-2 leading-relaxed">Spatial barn monitoring.</p>
+            <h4 className="font-bold text-[#17221C]">Visualisasi Interaktif</h4>
+            <p className="text-xs text-[#7C8176] mt-2 leading-relaxed">Pemantauan area spasial kandang.</p>
           </div>
 
           {/* Feature Card 2: Analytics (Span 2 cols, 1 row) */}
@@ -156,8 +146,8 @@ export default async function Home() {
             <div className="w-12 h-12 bg-[#C65A4A]/10 text-[#C65A4A] rounded-2xl flex items-center justify-center mb-4">
               <Activity className="w-6 h-6" />
             </div>
-            <h4 className="font-bold text-[#17221C]">Deep Analytics</h4>
-            <p className="text-xs text-[#7C8176] mt-2 leading-relaxed">Dark Mode data command.</p>
+            <h4 className="font-bold text-[#17221C]">Analitik Mendalam</h4>
+            <p className="text-xs text-[#7C8176] mt-2 leading-relaxed">Dasbor komando dengan Dark Mode.</p>
           </div>
 
         </div>

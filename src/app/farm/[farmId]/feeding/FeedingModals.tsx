@@ -12,12 +12,12 @@ export function AddFeedModal({ farmId }: { farmId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-        <Plus className="w-4 h-4" /> Add Feed Type
+        <Plus className="w-4 h-4" /> Tambah Jenis Pakan
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Register New Feed Type</DialogTitle>
-          <DialogDescription>Add a new type of feed to your warehouse.</DialogDescription>
+          <DialogTitle>Daftarkan Jenis Pakan Baru</DialogTitle>
+          <DialogDescription>Tambahkan pakan baru ke dalam gudang Anda.</DialogDescription>
         </DialogHeader>
         <form 
           action={(fd) => {
@@ -29,18 +29,18 @@ export function AddFeedModal({ farmId }: { farmId: string }) {
           className="space-y-4 pt-4"
         >
           <div>
-            <label className="block text-sm font-medium mb-1">Feed Name</label>
+            <label className="block text-sm font-medium mb-1">Nama Pakan</label>
             <input 
               type="text" 
               name="itemName"
               required
-              placeholder="e.g. Starter Crumble X-1"
+              placeholder="Cth. Starter Crumble X-1"
               className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm" 
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Unit</label>
+              <label className="block text-sm font-medium mb-1">Satuan</label>
               <select 
                 name="unit"
                 required
@@ -52,7 +52,7 @@ export function AddFeedModal({ farmId }: { farmId: string }) {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Initial Stock</label>
+              <label className="block text-sm font-medium mb-1">Stok Awal</label>
               <input 
                 type="number" 
                 name="initialStock"
@@ -68,7 +68,7 @@ export function AddFeedModal({ farmId }: { farmId: string }) {
             disabled={isPending}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 rounded-md text-sm font-semibold transition-colors mt-2"
           >
-            {isPending ? 'Saving...' : 'Save Item'}
+            {isPending ? 'Menyimpan...' : 'Simpan Pakan'}
           </button>
         </form>
       </DialogContent>
