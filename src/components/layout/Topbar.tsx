@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { verifySession } from '@/lib/auth/session';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bell } from 'lucide-react';
+import { MobileMenuButton } from './MobileMenuButton';
 
 export async function Topbar({ farmId }: { farmId: string }) {
   const session = await verifySession();
@@ -21,8 +22,9 @@ export async function Topbar({ farmId }: { farmId: string }) {
   const memberInfo = memberships.find(m => m.farmId === farmId);
 
   return (
-    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6 flex-shrink-0">
-      <div className="w-64">
+    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-4 md:px-6 flex-shrink-0">
+      <div className="flex items-center w-auto md:w-64">
+        <MobileMenuButton />
         {memberships.length > 0 && (
           <TenantSwitcher farms={memberships} currentFarmId={farmId} />
         )}
