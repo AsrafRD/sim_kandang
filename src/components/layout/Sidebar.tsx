@@ -81,11 +81,11 @@ export function Sidebar({ farmId, role, memberships, userName = 'User' }: { farm
         ${isDesktopClosed ? 'md:-translate-x-full md:w-0 md:border-r-0 md:opacity-0 md:overflow-hidden' : 'md:translate-x-0 md:w-64 md:opacity-100'}
       `}>
         <div className="px-4 py-2 flex items-center shrink-0 min-w-[16rem]">
-          <img src="/logo.png" alt="Logo" className="w-12 h-12" />
+          {/* <img src="/logo.png" alt="Logo" className="w-12 h-12" /> */}
           <h2 className="flex flex-col text-2xl font-bold font-heading text-sidebar-primary tracking-tight">
           FARMOS
             <div className="text-center text-xs font-medium text-sidebar-foreground/30 uppercase tracking-widest">
-          {APP_VERSION}
+          {/* {APP_VERSION} */}
         </div>
           </h2>
           <button className="md:hidden text-sidebar-foreground p-1 rounded-md hover:bg-sidebar-accent ml-auto" onClick={() => setIsOpen(false)}>
