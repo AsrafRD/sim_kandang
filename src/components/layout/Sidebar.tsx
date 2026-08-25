@@ -12,39 +12,51 @@ import {
   BarChart3, 
   Receipt,
   LogOut,
-  X
+  X,
+  Users
 } from 'lucide-react';
 
 import { logoutAction } from '@/app/(auth)/logout/actions';
 import { useSidebar } from './SidebarContext';
+import { TenantSwitcher } from './TenantSwitcher';
 
 const sidebarGroups = [
   {
-    label: 'FARM',
+    label: 'DASHBOARD',
+    allowedRoles: ['SUPERADMIN', 'OWNER', 'OPERATOR', 'SUPPLIER'],
     items: [
       { name: 'Overview', href: '/overview', icon: LayoutDashboard },
-      { name: 'Barns', href: '/barns', icon: Map },
-      { name: 'Livestock', href: '/livestock', icon: Cat },
     ]
   },
   {
     label: 'OPERATIONS',
+    allowedRoles: ['SUPERADMIN', 'OWNER', 'OPERATOR'],
     items: [
+      { name: 'Livestock', href: '/livestock', icon: Cat },
       { name: 'Feeding', href: '/feeding', icon: Wheat },
-      { name: 'Health & Vaccines', href: '/health', icon: Activity },
+      { name: 'Health & Vaccine', href: '/health', icon: Activity },
+      { name: 'Barns', href: '/barns', icon: Map },
       { name: 'Daily Entry', href: '/daily-input', icon: PenTool },
     ]
   },
   {
     label: 'INSIGHTS',
+    allowedRoles: ['SUPERADMIN', 'OWNER'],
     items: [
       { name: 'Analytics', href: '/analytics', icon: BarChart3 },
       { name: 'Reports', href: '/reports', icon: Receipt },
     ]
+  },
+  {
+    label: 'SETTINGS',
+    allowedRoles: ['SUPERADMIN', 'OWNER'],
+    items: [
+      { name: 'Team Management', href: '/settings/team', icon: Users },
+    ]
   }
 ];
 
-export function Sidebar({ farmId }: { farmId: string }) {
+export function Sidebar({ farmId, role, memberships }: { farmId: string, role: string, memberships: any[] }) {
   const pathname = usePathname();
   const { isOpen, setIsOpen } = useSidebar();
 
@@ -67,8 +79,20 @@ export function Sidebar({ farmId }: { farmId: string }) {
             <X size={20} />
           </button>
         </div>
+        
+        {/* Mobile Tenant Switcher */}
+        <div className="md:hidden px-4 mb-4">
+          {memberships && memberships.length > 0 && (
+            <TenantSwitcher farms={memberships} currentFarmId={farmId} />
+          )}
+        </div>
+
       <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6">
-        {sidebarGroups.map((group) => (
+        {sidebarGroups.map((group) => {
+          if (group.allowedRoles && !group.allowedRoles.includes(role)) {
+            return null;
+          }
+          return (
           <div key={group.label}>
             <div className="text-xs font-semibold text-sidebar-foreground/50 mb-2 tracking-wider">
               {group.label}
@@ -97,7 +121,8 @@ export function Sidebar({ farmId }: { farmId: string }) {
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
       <div className="p-4 border-t border-sidebar-border mt-auto mb-2">
         <form action={logoutAction}>
